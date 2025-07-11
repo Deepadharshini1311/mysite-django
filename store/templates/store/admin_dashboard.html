@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="admin-dashboard">
+    <h2>Admin Dashboard</h2>
+    <h3>All Orders</h3>
+
+    <table class="orders-table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>#{{ order.id }}</td>
+                <td>{{ order.user.username }}</td>
+                <td>{{ order.date }}</td>
+                <td>₹ {{ order.total }}</td>
+                <td>{{ order.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

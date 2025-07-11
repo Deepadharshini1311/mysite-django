@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyStore | Home</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <h1 class="logo">🛍️ <i>E-appliances<i> 🛍️</h1>
+            
+            <nav>
+                <form method="GET" action="{% url 'home' %}" class="search-bar">
+             <input type="text" name="q" placeholder="Search products..." value="{{ request.GET.q }}" />
+             <button type="submit">Search</button>
+        </form>
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'cart' %}">Cart</a>
+                <a href="{% url 'register' %}">Sign up</a>
+                
+                {% if user.is_authenticated %}
+                    <a href="{% url 'login' %}">Login</a>
+                {% else %}
+                    <a href="{% url 'logout' %}">Logout</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+        <main class="container">
+        <h2 class="section-title">Featured Products</h2>
+        
+
+        <div class="product-grid">
+            {% for product in products %}
+            <div class="product-card">
+                <img src="{{product.image.url}}" alt="{{ product.name }}">
+                <h3>{{ product.name }}</h3>
+                <p class="description">{{ product.description|truncatechars:100 }}</p>
+                <p class="price">₹ {{ product.price }}</p>
+                <div class="actions">
+                    <a href="{% url 'product_detail' product.id %}" class="btn">View</a>
+                    <a href="{% url 'add_to_cart' product.id %}" class="btn">Add to Cart</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 E-appliances. Built for Internship by Deepadharshini.R </p>
+        </div>
+    </footer>
+</body>
+</html>

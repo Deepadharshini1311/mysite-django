@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Shopping Cart</title>
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+</head>
+<body>
+    <div class="cart-container">
+        <h2>Your Shopping Cart</h2>
+
+        {% for item in cart_items %}
+        <div class="cart-item">
+            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+            <div class="details">
+                <h4>{{ item.product.name }}</h4>
+                <p>Price: ₹{{ item.product.price }}</p>
+                <p>Quantity: {{ item.quantity }}</p>
+
+                <form method="post" action="{% url 'update_cart' item.product.id %}">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                    <button type="submit" class="btn update">Update</button>
+                </form>
+
+                <form method="post" action="{% url 'remove_from_cart' item.product.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn remove">Remove</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="cart-summary">
+            <h3>Total: ₹{{ total }}</h3>
+            <a href="{% url 'checkout' %}" class="btn checkout">Proceed to Checkout</a>
+        </div>
+    </div>
+</body>
+</html>
