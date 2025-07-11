@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!o!nqv@acqc7ivyak_5k6629@87j33++l^4k0#u=ns#=!z@5d@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+#DEBUG = True
 
-ALLOWED_HOSTS = ['mysite.onrender.com']
+#ALLOWED_HOSTS = ['']
 
 
 # Application definition
@@ -138,3 +138,9 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'deepakalai2004@gmail.com'  # Replace with your Gmail
 EMAIL_HOST_PASSWORD = 'zkkd mczk jydy vhue' # Use an App Password (not your Gmail password)
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+import os 
+from pathlib import Path 
+BASE_DIR = Path(__file__).resolve().parent.parent
+SECRET_KEY=os.environ.get("SECRET_KEY","fallback-secret-if-local")
+DEBUG=os.environ.get("DEBUG","False")=="True"
+ALLOWED_HOSTS=os.environ.get("ALLOWED_HOSTS","").split(",")
